@@ -5,7 +5,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { getAuth,onAuthStateChanged } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { signOut } from 'firebase/auth';
-import { getFirestore, doc, getDoc, collection,query, where, getDocs, addDoc, setDoc,onSnapshot } from 'firebase/firestore';
+import { getFirestore, doc, collection,query, where, getDocs, addDoc, setDoc,onSnapshot } from 'firebase/firestore';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { AppBar, Toolbar, Button, Menu, MenuItem, ListItemText } from '@mui/material';
 import PlayersList from './PlayersList';
@@ -179,22 +179,6 @@ const getPosts = async () => {
     return querySnapshot.docs.map(doc => doc.data());
   } catch (e) {
     console.error('Error getting documents: ', e);
-  }
-};
-
-// 특정 게시글 불러오기
-const getPost = async (id) => {
-  try {
-    const docRef = doc(db, 'posts', id);
-    const docSnap = await getDoc(docRef);
-
-    if (docSnap.exists()) {
-      return docSnap.data();
-    } else {
-      console.log('No such document!');
-    }
-  } catch (e) {
-    console.error('Error getting document: ', e);
   }
 };
 

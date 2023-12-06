@@ -121,22 +121,25 @@ const PuzzleGame = () => {
 
   useEffect(() => {
     const isComplete = tiles.slice().sort((a, b) => a.id - b.id).every((tile, index) => tile.id === index + 1);
-
+  
     if (isComplete) {
+
       const user = auth.currentUser;
       if (user) {
         const userRef = doc(db, 'users', user.uid);
         const newPoints = points + 1000;
-        setPoints(newPoints);
-
+  
         updateDoc(userRef, {
           points: newPoints
+        }).then(() => {
+          setPoints(newPoints); // 포인트 업데이트가 성공적으로 완료된 후에만 상태를 업데이트합니다. 
         });
       } else {
         console.log("User is not logged in.");
       }
     }
   }, [tiles]);
+  
 
   return (
     <DndProvider backend={HTML5Backend}>
